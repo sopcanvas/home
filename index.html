@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOP Canvas | Professional Academic Writing</title>
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Updated Light-Reflective Dark Palette */
+            --bg-deep: #05070a;
+            --card-bg: #0f172a;
+            --accent-emerald: #00ffaa; /* Brighter, more neon */
+            --accent-blue: #38bdf8;
+            --text-silver: #94a3b8;
+            --text-white: #ffffff;
+            --warning-red: #ff4d4d;
+            --glass-shine: rgba(255, 255, 255, 0.05);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { 
+            background-color: var(--bg-deep); 
+            color: var(--text-white); 
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Smooth Scroll Progress Bar */
+        #scroll-path {
+            position: fixed; top: 0; left: 0; height: 4px;
+            background: linear-gradient(to right, var(--accent-emerald), var(--accent-blue));
+            z-index: 2000; width: 0%; transition: width 0.1s ease-out;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed; top: 0; width: 100%; padding: 1.2rem 8%;
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 1000; background: rgba(5, 7, 10, 0.9);
+            backdrop-filter: blur(15px); border-bottom: 1px solid var(--glass-shine);
+        }
+
+        .logo { font-size: 1.6rem; font-weight: 800; letter-spacing: -1px; }
+        .logo span { color: var(--accent-emerald); text-shadow: 0 0 15px rgba(0, 255, 170, 0.3); }
+
+        /* Hero Section with Parallax Effect */
+        .hero {
+            height: 100vh; display: flex; align-items: center; justify-content: center;
+            text-align: center; padding: 0 10%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(0, 255, 170, 0.05), transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(56, 189, 248, 0.05), transparent 40%);
+        }
+
+        .hero h1 { 
+            font-size: clamp(2.5rem, 6vw, 4.5rem); 
+            font-weight: 800; line-height: 1.1; margin-bottom: 1.5rem;
+            letter-spacing: -2px;
+        }
+        
+        .hero h1 span {
+            background: linear-gradient(to right, #fff, var(--accent-emerald));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Stats Grid - High Animation */
+        .stats-grid {
+            display: flex; gap: 40px; justify-content: center; margin-top: 4rem;
+            flex-wrap: wrap;
+        }
+        .stat-item { text-align: center; }
+        .stat-number { 
+            display: block; font-size: 3.5rem; font-weight: 800; 
+            color: var(--accent-emerald); line-height: 1;
+        }
+        .stat-label { color: var(--text-silver); font-size: 0.9rem; letter-spacing: 1px; text-transform: uppercase; }
+
+        .flag-row { display: flex; gap: 20px; justify-content: center; margin-top: 3rem; }
+        .flag-row img { 
+            width: 40px; border-radius: 4px; filter: grayscale(100%) opacity(0.5); 
+            transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+        }
+        .flag-row img:hover { filter: grayscale(0%) opacity(1); transform: scale(1.3) translateY(-5px); }
+
+        /* Section Styling */
+        section { padding: 120px 10%; position: relative; }
+        .section-tag { color: var(--accent-emerald); font-weight: 700; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 3px; display: block; margin-bottom: 15px; }
+        h2 { font-size: 3rem; margin-bottom: 3.5rem; letter-spacing: -1px; }
+
+        /* Warning Cards with Glow */
+        .reality-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2.5rem; }
+        .warning-card {
+            background: var(--card-bg); border: 1px solid var(--glass-shine);
+            padding: 3rem 2rem; border-radius: 30px; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative; overflow: hidden;
+        }
+        .warning-card:hover { 
+            border-color: var(--warning-red); 
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(255, 77, 77, 0.1);
+        }
+        .warning-card i { color: var(--warning-red); font-size: 2rem; margin-bottom: 1.5rem; }
+
+        /* Benefit Item Transitions */
+        .different-section { 
+            background: linear-gradient(145deg, #0f172a, #05070a); 
+            border-radius: 50px; border: 1px solid var(--glass-shine);
+            margin: 0 5%; padding: 100px 8%; 
+        }
+        .benefit-item { 
+            display: flex; align-items: center; gap: 15px; font-weight: 600; padding: 15px;
+            background: rgba(255,255,255,0.02); border-radius: 15px; transition: 0.3s;
+        }
+        .benefit-item:hover { background: rgba(0, 255, 170, 0.05); transform: translateX(10px); }
+        .benefit-item i { color: var(--accent-emerald); }
+
+        /* Pricing with Shine Animation */
+        .price-card {
+            background: #0f172a; padding: 4rem 2.5rem; border-radius: 35px; text-align: center;
+            border: 1px solid var(--glass-shine); transition: 0.5s; position: relative;
+        }
+        .price-card.featured { border-color: var(--accent-emerald); box-shadow: 0 0 30px rgba(0, 255, 170, 0.1); }
+        .price-card:hover { border-color: var(--accent-blue); transform: scale(1.03); }
+        .price-val { font-size: 3.2rem; font-weight: 800; color: var(--text-white); margin: 1.5rem 0; }
+
+        /* Premium CTA Button */
+        .cta-btn {
+            background: linear-gradient(135deg, var(--accent-emerald), #059669);
+            color: #05070a; padding: 1.2rem 3rem; border-radius: 100px; 
+            text-decoration: none; font-weight: 800; display: inline-flex;
+            align-items: center; gap: 12px; transition: 0.4s;
+            box-shadow: 0 10px 25px rgba(0, 255, 170, 0.2);
+        }
+        .cta-btn:hover { transform: scale(1.05) translateY(-3px); box-shadow: 0 15px 35px rgba(0, 255, 170, 0.4); }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            section { padding: 100px 8%; }
+            .hero h1 { font-size: 2.8rem; }
+            .stat-number { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="scroll-path"></div>
+
+    <nav>
+        <div class="logo">SOP<span>Canvas</span></div>
+        <a href="https://wa.me/8801610339285" class="cta-btn" style="padding: 0.7rem 1.5rem; font-size: 0.85rem;">
+            <i class="fab fa-whatsapp"></i> Direct Consultation
+        </a>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content" data-aos="zoom-out">
+            <span class="section-tag" data-aos="fade-down">The Gold Standard of Writing</span>
+            <h1><span>Craft Your Global Success</span> <br>Without the Risk</h1>
+            <p>Your GS Statement and Visa SOP are the most critical parts of your journey. We provide original, human-crafted narratives that command attention from admissions officers.</p>
+            
+            <!-- Dynamic Stats Requirement -->
+            <div class="stats-grid">
+                <div class="stat-item" data-aos="fade-up" data-aos-delay="100">
+                    <span class="stat-number">1000+</span>
+                    <span class="stat-label">Success Stories</span>
+                </div>
+                <div class="stat-item" data-aos="fade-up" data-aos-delay="200">
+                    <span class="stat-number">98%</span>
+                    <span class="stat-label">Visa Success Rate</span>
+                </div>
+                <div class="stat-item" data-aos="fade-up" data-aos-delay="300">
+                    <span class="stat-number">40+</span>
+                    <span class="stat-label">Top Universities</span>
+                </div>
+            </div>
+
+            <div class="flag-row">
+                <img src="https://flagcdn.com/au.svg" alt="Australia">
+                <img src="https://flagcdn.com/ca.svg" alt="Canada">
+                <img src="https://flagcdn.com/us.svg" alt="USA">
+                <img src="https://flagcdn.com/gb.svg" alt="UK">
+                <img src="https://flagcdn.com/eu.svg" alt="Europe">
+                <img src="https://flagcdn.com/kr.svg" alt="South Korea">
+                <img src="https://flagcdn.com/jp.svg" alt="Japan">
+            </div>
+        </div>
+    </section>
+
+    <!-- Reality Check -->
+    <section>
+        <div class="section-header" data-aos="fade-right">
+            <span class="section-tag" style="color: var(--warning-red);">The Reality Check</span>
+            <h2>Before You Choose Any Writer</h2>
+        </div>
+        
+        <div class="reality-grid">
+            <div class="warning-card" data-aos="fade-up">
+                <i class="fas fa-hand-holding-usd"></i>
+                <h4>Financial Trap</h4>
+                <p>Demand for 50%–100% advance payment upfront is a red flag. We believe in earning your trust first.</p>
+            </div>
+            <div class="warning-card" data-aos="fade-up" data-aos-delay="100">
+                <i class="fas fa-bullhorn"></i>
+                <h4>Marketing Gimmicks</h4>
+                <p>Agencies charge 15,000 BDT for flashy ads while delivering identical templates to every student.</p>
+            </div>
+            <div class="warning-card" data-aos="fade-up" data-aos-delay="200">
+                <i class="fas fa-robot"></i>
+                <h4>AI & Inexperience</h4>
+                <p>Most "premium" services are now just ChatGPT wrappers. We provide raw, human intelligence.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Service Differentiator -->
+    <section class="different-section" data-aos="fade-up">
+        <span class="section-tag">The SOP Canvas Difference</span>
+        <h2 style="margin-bottom: 2.5rem;">Service-First Philosophy</h2>
+        
+        <div class="benefit-list">
+            <div class="benefit-item" data-aos="fade-left"><i class="fas fa-bolt"></i> Profile-based Original Writing</div>
+            <div class="benefit-item" data-aos="fade-left" data-aos-delay="50"><i class="fas fa-fingerprint"></i> Zero AI - 100% Human Expertise</div>
+            <div class="benefit-item" data-aos="fade-left" data-aos-delay="100"><i class="fas fa-tags"></i> Most Affordable Pricing in the Market</div>
+            <div class="benefit-item" data-aos="fade-left" data-aos-delay="150"><i class="fas fa-comments"></i> Direct Transparency with the Writer</div>
+            <div class="benefit-item" data-aos="fade-left" data-aos-delay="200" style="background: rgba(0, 255, 170, 0.1);"><i class="fas fa-shield-halved"></i> <b>No Advance Payment Needed</b></div>
+            <div class="benefit-item" data-aos="fade-left" data-aos-delay="250"><i class="fas fa-star"></i> Pay Only Upon Final Approval</div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section id="pricing">
+        <div class="section-header" data-aos="fade-up">
+            <span class="section-tag">Transparent Investment</span>
+            <h2>Our Pricing Structure</h2>
+        </div>
+
+        <div class="pricing-container">
+            <div class="price-card featured" data-aos="fade-up">
+                <h3>Australia Specialist</h3>
+                <div class="price-val">3500 <span>BDT</span></div>
+                <ul style="list-style: none; color: var(--text-silver); text-align: left; margin-top: 20px;">
+                    <li style="margin-bottom: 10px;"><i class="fas fa-check" style="color:var(--accent-emerald)"></i> Full GS Statement</li>
+                    <li style="margin-bottom: 10px;"><i class="fas fa-check" style="color:var(--accent-emerald)"></i> Strategic Visa SOP</li>
+                    <li style="margin-bottom: 10px;"><i class="fas fa-check" style="color:var(--accent-emerald)"></i> <strong>Combo Package Savings</strong></li>
+                </ul>
+            </div>
+
+            <div class="price-card" data-aos="fade-up" data-aos-delay="100">
+                <h3>Admission SOP</h3>
+                <div class="price-val">2500 <span>BDT</span></div>
+                <ul style="list-style: none; color: var(--text-silver); text-align: left; margin-top: 20px;">
+                    <li style="margin-bottom: 10px;"><i class="fas fa-check" style="color:var(--accent-blue)"></i> Bachelor’s & Master’s</li>
+                    <li style="margin-bottom: 10px;"><i class="fas fa-check" style="color:var(--accent-blue)"></i> PhD Proposals (3500 BDT)</li>
+                    <li style="margin-bottom: 10px;"><i class="fas fa-check" style="color:var(--accent-blue)"></i> UK/USA/Canada/EU</li>
+                </ul>
+            </div>
+
+            <div class="price-card" data-aos="fade-up" data-aos-delay="200">
+                <h3>Career Branding</h3>
+                <div class="price-val">1500 <span>BDT</span></div>
+                <ul style="list-style: none; color: var(--text-silver); text-align: left; margin-top: 20px;">
+                    <li style="margin-bottom: 10px;"><i class="fas fa-check"></i> ATS Optimized CV</li>
+                    <li style="margin-bottom: 10px;"><i class="fas fa-check"></i> Europass Format</li>
+                    <li style="margin-bottom: 10px;"><i class="fas fa-check"></i> Professional Cover Letter</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section style="text-align: center; background: #05070a; padding-bottom: 150px;">
+        <div data-aos="zoom-in">
+            <h2 style="margin-bottom: 1.5rem;">Secure Your Academic Future Today</h2>
+            <p style="color: var(--text-silver); margin-bottom: 3rem; max-width: 600px; margin-inline: auto;">Elite-level writing shouldn't be a financial burden. Experience the SOP Canvas difference with zero risk.</p>
+            <a href="https://wa.me/8801610339285" class="cta-btn">
+                <i class="fab fa-whatsapp"></i> Start Your Draft Now
+            </a>
+            <div style="margin-top: 3rem;">
+                <p style="font-size: 1.5rem; font-weight: 800; color: var(--accent-emerald);">+880 1610 339285</p>
+                <span class="stat-label">Available 24/7 for Global Students</span>
+            </div>
+        </div>
+    </section>
+
+    <footer style="padding: 4rem 10%; background: #030406; text-align: center; border-top: 1px solid var(--glass-shine);">
+        <p style="color: var(--text-silver); font-size: 0.9rem;">&copy; 2026 SOP Canvas. Original Content. Human-Driven Success.</p>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 1000, once: false });
+
+        // Smooth scroll progress bar
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById("scroll-path").style.width = scrolled + "%";
+        });
+    </script>
+</body>
+</html>
